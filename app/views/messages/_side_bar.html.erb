@@ -2,7 +2,7 @@
 <%#サイドヘッダー%>
 <div class="side-bar-header">
   <div class="user-name">
-    <a href="#">Nakano</a>
+    <%= link_to current_user.name , edit_user_path(current_user) %>
   </div>
   <div class="create-chat">
     <a href="#">チャットを作成する</a>
