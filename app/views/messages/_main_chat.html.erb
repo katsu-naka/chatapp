@@ -2,59 +2,27 @@
 <div class="chat-header">
   <div class="left-header">
     <div class="header-title">
-      testroom1
+      <%= @room.name %>
     </div>
   </div>
   <div class="right-header">
     <div class="header-btn">
-      <a href="#">チャットを終了する</a>
+      <%= link_to "チャットを終了する", room_path(@room), method: :delete %>
     </div>
   </div>
 </div>
 
 <div class="chat-main"> <%#メッセージ全体の表示欄%>
-
-  <div class="message"><%#メッセージ表示欄%>
-    <div class="upper-message"> <%#メッセージ欄上部の親要素%>
-      <div class="message-user">
-        Nakano
-      </div>
-      <div class="message-date">
-        2020/9/20(Sun) 13:10:30
-      </div>
-    </div>
-    <div class="lower-message"><%#メッセージ欄下部の親要素%>
-      <div class="message-content">
-        こんにちは
-      </div>
-    </div>
-  </div>
-
-  <div class="message">
-    <div class="upper-message">
-      <div class="message-user">
-        NAKAMURA
-      </div>
-      <div class="message-date">
-        2020/9/20(Sun) 13:15:20
-      </div>
-    </div>
-    <div class="lower-message">
-      <div class="message-content">
-        どうも
-      </div>
-    </div>
-  </div>
-
+  <%= render partial: 'message', collection: @messages %> <%#collectionメソッドを使用してrenderメソッドの処理を繰り返す%>
 </div>
 
-<div class="chat-footer">
+<%= form_with model: [@room, @message], html: {class: "chat-footer"}, local: true do |f| %>
   <div class="form-input">
-    <input placeholder="type a message" class="message-box">
+    <%= f.text_field :content, placeholder: 'type a message', class: 'message-box' %>
     <label class="form-image">
       <span class="image-file">画像</span>
-      <input type="file" class="hidden">
+      <%= f.file_field :image, class: 'hidden' %>
     </label>
   </div>
-    <input type="submit" value="送信" class="send" >
-</div>
+  <%= f.submit '送信', class: 'send' %>
+<% end %>
