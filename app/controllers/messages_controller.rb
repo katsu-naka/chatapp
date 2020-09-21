@@ -2,6 +2,7 @@ class MessagesController < ApplicationController
   def index
     @message = Message.new #Messageモデルのインスタンス情報を代入
     @room = Room.find(params[:room_id]) #パラメータ内に含まれているroom_idも取得する。
+    @messages = @room.messages.includes(:user)
   end
 
   def create
@@ -10,6 +11,7 @@ class MessagesController < ApplicationController
     if @message.save #saveメソッドでメッセージの内容をmessagesテーブルに保存する。
       redirect_to room_messages_path(@room)
     else
+      @messages = @room.messages.includes(:user)
       render :index
     end
   end
